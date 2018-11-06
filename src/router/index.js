@@ -74,7 +74,7 @@ const OrderDown = (resolve) => {
   })
 }
 export default new Router({
-  //	 mode: 'history',
+  	 mode: 'history',
   routes: [
     {
       path: '/',
