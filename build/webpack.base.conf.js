@@ -3,18 +3,14 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-const HappyPack = require('happypack')
-const os = require('os')
-const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 
-function resolve(dir) {
+function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
 
 
 module.exports = {
-
   context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.js'
@@ -33,14 +29,6 @@ module.exports = {
       '@': resolve('src'),
     }
   },
-  // 增加HappyPack插件
-  plugins: [
-    new HappyPack({
-      id: 'happy-babel-js',
-      loaders: ['babel-loader?cacheDirectory=true'],
-      threadPool: happyThreadPool,
-    }),
-  ],
   module: {
     rules: [
       {
@@ -49,16 +37,9 @@ module.exports = {
         options: vueLoaderConfig
       },
       {
-        test: /\.less$/,
-        loader: 'vue-loader',
-        options: vueLoaderConfig
-      },
-      {
         test: /\.js$/,
-        // loader: 'babel-loader',
-        loader: 'happypack/loader?id=happy-babel-js', // 增加新的HappyPack构建loader
-        exclude: /node_modules/,
-        include: [resolve('src')]
+        loader: 'babel-loader',
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

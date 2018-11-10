@@ -1,19 +1,17 @@
 'use strict'
-const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
+const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
-const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
+
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
-// webpack.dev.conf.js、webpack.prod.conf.js webpack配置文件添加插件配置
-const WorkBoxPlugin = require('workbox-webpack-plugin')
-const SwRegisterWebpackPlugin = require('sw-register-webpack-plugin')
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -25,8 +23,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // these devServer options should be customized in /config/index.js
   devServer: {
     clientLogLevel: 'warning',
-    historyApiFallback: true,
+    historyApiFallback: {
+      rewrites: [
+        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
+      ],
+    },
     hot: true,
+    contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
     host: HOST || config.dev.host,
     port: PORT || config.dev.port,
@@ -42,6 +45,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     }
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': require('../config/dev.env')
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
@@ -51,22 +57,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true
     }),
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('./vendor-manifest.json')
-    }),
-    new SkeletonWebpackPlugin({
-      webpackConfig: require('./webpack.skeleton.conf')
-    }),
-    // 以service-worker.js文件为模板，注入生成service-worker.js
-    new WorkBoxPlugin.InjectManifest({
-      swSrc: path.resolve(__dirname, '../src/service-worker.js')
-    }),
-    // 通过插件注入生成sw注册脚本
-    new SwRegisterWebpackPlugin({
-      version: +new Date()
-    }),
-
+    // copy custom static assets
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: config.dev.assetsSubDirectory,
+        ignore: ['.*']
+      }
+    ])
   ]
 })
 
@@ -87,8 +85,8 @@ module.exports = new Promise((resolve, reject) => {
           messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
         },
         onErrors: config.dev.notifyOnErrors
-          ? utils.createNotifierCallback()
-          : undefined
+        ? utils.createNotifierCallback()
+        : undefined
       }))
 
       resolve(devWebpackConfig)

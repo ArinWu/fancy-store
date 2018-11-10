@@ -1,7 +1,7 @@
 <template>
 
 	<div class="page">
-		<message ref="message"></message>
+		<!-- <message ref="message"></message> -->
 		<headers :tabname="$t('m.HeaderIndex')"></headers>
 		<div class="langBox" @click="changeLang">{{$t('m.local')}}</div>
 		<transition :name="slidename">

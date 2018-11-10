@@ -10,12 +10,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 const env = require('../config/prod.env')
-const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
-// webpack.dev.conf.js、webpack.prod.conf.js webpack配置文件添加插件配置
-const WorkBoxPlugin = require('workbox-webpack-plugin')
-const SwRegisterWebpackPlugin = require('sw-register-webpack-plugin')
+
+const PrerenderSPAPlugin = require('prerender-spa-plugin')
+
+
+
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
@@ -44,7 +45,6 @@ const webpackConfig = merge(baseWebpackConfig, {
       sourceMap: config.build.productionSourceMap,
       parallel: true
     }),
-    // new BundleAnalyzerPlugin(), //开启webpack-bunble-analyzer，查看打包后的资源占用
     // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css'),
@@ -78,14 +78,14 @@ const webpackConfig = merge(baseWebpackConfig, {
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
-    // keep module.id stable when vender modules does not change
+    // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting
     new webpack.optimize.ModuleConcatenationPlugin(),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks(module) {
+      minChunks (module) {
         // any required modules inside node_modules are extracted to vendor
         return (
           module.resource &&
@@ -120,21 +120,26 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('./vendor-manifest.json')
-    }),
-    new SkeletonWebpackPlugin({
-      webpackConfig: require('./webpack.skeleton.conf')
-    }),
-    // 以service-worker.js文件为模板，注入生成service-worker.js
-    new WorkBoxPlugin.InjectManifest({
-      swSrc: path.resolve(__dirname, '../src/service-worker.js')
-    }),
-    // 通过插件注入生成sw注册脚本
-    new SwRegisterWebpackPlugin({
-      version: +new Date()
-    }),
+    new PrerenderSPAPlugin({
+      staticDir: config.build.assetsRoot,
+      // routes:['/','/category'],
+      routes: [ '/', '/category','/cart','/member','/info','/order','/address','/addaddress','/detail','/orderwait','/waitpay','/waitdeliver','/waitreceive','/orderdown' ], // 需要预渲染的路由（视你的项目而定）
+      minify: {
+        collapseBooleanAttributes: true,
+        collapseWhitespace: true,
+        decodeEntities: true,
+        keepClosingSlash: true,
+        sortAttributes: true
+      },
+      postProcess (renderedRoute) {
+        renderedRoute.html = renderedRoute.html.replace(/<script[^<]*src="[^<]*[0-9]+\.[0-9a-z]{20}\.js"><\/script>/g,function (target) {
+          console.log(chalk.bgRed('\n\n剔除的懒加载标签:'), chalk.magenta(target))
+          return ''
+        })
+        return renderedRoute
+      }    
+    })
+  
   ]
 })
 

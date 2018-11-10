@@ -52,17 +52,13 @@ Vue.config.productionTip = isDebug_mode
 // or with options
 Vue.use(VueLazyLoad, { //懒加载声明错误图和占位图
   preLoad: 1.3,
-  error: './static/img/github.png',
-  loading: './static/img/github.png',
+  // error: './static/img/github.png',
+  // loading: './static/img/github.png',
 })
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
   i18n,
   router,
   store,
-  template: '<App/>',
-  components: {
-    App,
-  }
-})
+  render: h => h(App)
+}).$mount('#app', true)
