@@ -131,13 +131,28 @@ const webpackConfig = merge(baseWebpackConfig, {
         keepClosingSlash: true,
         sortAttributes: true
       },
+      // postProcess (renderedRoute) {
+      //   renderedRoute.html = renderedRoute.html.replace(/<script[^<]*src="[^<]*[0-9]+\.[0-9a-z]{20}\.js"><\/script>/g,function (target) {
+      //     console.log(chalk.bgRed('\n\n剔除的懒加载标签:'), chalk.magenta(target))
+      //     return ''
+      //   })
+      //   return renderedRoute
+      // } 
       postProcess (renderedRoute) {
-        renderedRoute.html = renderedRoute.html.replace(/<script[^<]*src="[^<]*[0-9]+\.[0-9a-z]{20}\.js"><\/script>/g,function (target) {
-          console.log(chalk.bgRed('\n\n剔除的懒加载标签:'), chalk.magenta(target))
-          return ''
-        })
+        // Ignore any redirects.
+        renderedRoute.route = renderedRoute.originalRoute
+        // Basic whitespace removal. (Don't use this in production.)
+        renderedRoute.html = renderedRoute.html.split(/>[\s]+</gmi).join('><')
+        // Remove /index.html from the output path if the dir name ends with a .html file extension.
+        // For example: /dist/dir/special.html/index.html -> /dist/dir/special.html
+        if (renderedRoute.route.endsWith('.html')) {
+          renderedRoute.outputPath = path.join(__dirname, 'dist', renderedRoute.route)
+        }
+
         return renderedRoute
-      }    
+      },
+
+   
     })
   
   ]
