@@ -48,6 +48,13 @@ import Footers from "../base/Footer.vue";
 import Message from "../base/Message.vue";
 import { mapGetters, mapMutations } from "vuex";
 export default {
+   metaInfo: {
+      title: 'fancy分类', // set a title
+      meta: [{                 // set meta
+        name: 'keyWords',
+        content: 'fancy-store'
+      }]
+    },
   data() {
     return {
       menuList: [],

@@ -47,6 +47,13 @@ import Headersec from "../base/HeaderSec.vue";
 import init_city_picker from "../../../static/js/data.city.js";
 import { mapGetters, mapMutations } from "vuex";
 export default {
+  metaInfo: {
+      title: 'fancy添加地址', // set a title
+      meta: [{                 // set meta
+        name: 'keyWords',
+        content: 'fancy-store'
+      }]
+    },
   data() {
     return {
       addressModel: false,

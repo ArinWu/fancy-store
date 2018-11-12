@@ -70,6 +70,19 @@ import Swiper from "../../static/js/swiper.min";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
+  // 如果你的meta需要动态加载
+  // metaInfo () {
+  //     return {
+  //       title: this.pageName
+  //     }
+  //   },
+  metaInfo: {
+      title: 'fancy首页', // set a title
+      meta: [{                 // set meta
+        name: 'keyWords',
+        content: 'fancy-store'
+      }]
+    },
   data() {
     return {
       bannerList: [],

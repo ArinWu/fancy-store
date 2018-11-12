@@ -32,6 +32,13 @@ import Headers from "../base/Header.vue";
 import Footers from "../base/Footer.vue";
 import { mapGetters, mapMutations } from "vuex";
 export default {
+  metaInfo: {
+      title: 'fancy用户页面', // set a title
+      meta: [{                 // set meta
+        name: 'keyWords',
+        content: 'fancy-store'
+      }]
+    },
   data() {
     return {
       slidename: "slide-go",

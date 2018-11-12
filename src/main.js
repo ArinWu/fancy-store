@@ -14,6 +14,7 @@ var VueTouch = require('vue-touch')
 import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
 import VueI18n from 'vue-i18n'
+import MetaInfo from 'vue-meta-info'
 Raven
   .config('https://ce431a99e0884612a053541eef0f2810@sentry.io/1245961', {
     release: process.env.RELEASE_VERSION,
@@ -27,6 +28,7 @@ fastclick.attach(document.body) //解决移动端点击事件200ms延迟
 
 Vue.use(Vuex)
 Vue.use(VueI18n)
+Vue.use(MetaInfo)
 const i18n = new VueI18n({
   locale: 'zh',    // 语言标识
   //this.$i18n.locale // 通过切换locale的值来实现语言切换

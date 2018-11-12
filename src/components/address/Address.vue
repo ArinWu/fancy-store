@@ -27,6 +27,13 @@ import Headersec from "../base/HeaderSec.vue";
 import Nopage from "../base/NoPage.vue";
 import { mapGetters, mapMutations } from "vuex";
 export default {
+  metaInfo: {
+      title: 'fancy地址', // set a title
+      meta: [{                 // set meta
+        name: 'keyWords',
+        content: 'fancy-store'
+      }]
+    },
   data() {
     return {
       havePage: false,

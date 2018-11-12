@@ -15,6 +15,13 @@
 <script>
 	import Headersec from '../base/HeaderSec.vue';
 	export default {
+		metaInfo: {
+      title: 'fancy个人信息', // set a title
+      meta: [{                 // set meta
+        name: 'keyWords',
+        content: 'fancy-store'
+      }]
+    },
 		data() {
 			return {
 				mainarea: false,

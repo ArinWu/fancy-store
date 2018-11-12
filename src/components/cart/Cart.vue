@@ -67,6 +67,13 @@ import Footers from "../base/Footer.vue";
 import Nopage from "../base/NoPage.vue";
 import { mapGetters, mapMutations } from "vuex";
 export default {
+  metaInfo: {
+      title: 'fancy购物车', // set a title
+      meta: [{                 // set meta
+        name: 'keyWords',
+        content: 'fancy-store'
+      }]
+    },
   data() {
     return {
       goodsRadioAll: false,
