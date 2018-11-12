@@ -138,19 +138,23 @@ const webpackConfig = merge(baseWebpackConfig, {
       //   })
       //   return renderedRoute
       // } 
-      postProcess (renderedRoute) {
-        // Ignore any redirects.
-        renderedRoute.route = renderedRoute.originalRoute
-        // Basic whitespace removal. (Don't use this in production.)
-        renderedRoute.html = renderedRoute.html.split(/>[\s]+</gmi).join('><')
-        // Remove /index.html from the output path if the dir name ends with a .html file extension.
-        // For example: /dist/dir/special.html/index.html -> /dist/dir/special.html
-        if (renderedRoute.route.endsWith('.html')) {
-          renderedRoute.outputPath = path.join(__dirname, 'dist', renderedRoute.route)
-        }
+      // postProcess (renderedRoute) {
+      //   // Ignore any redirects.
+      //   renderedRoute.route = renderedRoute.originalRoute
+      //   // Basic whitespace removal. (Don't use this in production.)
+      //   renderedRoute.html = renderedRoute.html.split(/>[\s]+</gmi).join('><')
+      //   // Remove /index.html from the output path if the dir name ends with a .html file extension.
+      //   // For example: /dist/dir/special.html/index.html -> /dist/dir/special.html
+      //   if (renderedRoute.route.endsWith('.html')) {
+      //     renderedRoute.outputPath = path.join(__dirname, 'dist', renderedRoute.route)
+      //   }
 
+      //   return renderedRoute
+      // },
+      postProcess (renderedRoute) {
+        renderedRoute.html = renderedRoute.html.replace(/(\<head\>.*?)(\<script.*?\<\/script\>){1,}(.*\<\/head\>)/g, '$1$3');
         return renderedRoute
-      },
+      }
 
    
     })
