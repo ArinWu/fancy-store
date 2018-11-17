@@ -1,359 +1,109 @@
-<p align="center"><a href="https://vuejs.org" target="_blank" rel="noopener noreferrer"><img width="100" src="https://vuejs.org/images/logo.png" alt="Vue logo"></a></p>
 
-<p align="center">
-  <a href="https://circleci.com/gh/vuejs/vue/tree/dev"><img src="https://img.shields.io/circleci/project/vuejs/vue/dev.svg" alt="Build Status"></a>
- <a href="https://www.npmjs.com/package/vue"><img src="https://img.shields.io/npm/v/vue.svg" alt="Version"></a>
-  <a href="https://www.npmjs.com/package/vue"><img src="https://img.shields.io/npm/l/vue.svg" salt="License"></a>
+![](https://user-gold-cdn.xitu.io/2018/11/17/167206e94a9c5c11?w=1891&h=533&f=png&s=491556)常见的<font color=red>Vue单页SPA</font>构建之后的index.html只是一个包含根节点的空白页面，当所有需要的js加载完毕之后，才会开始解析并创建<font color=red>vnode</font>,然后再渲染出真实的DOM。当这些js文件过大而网速又很慢或者出现意料之外的报错时，就会出现所谓的白屏。
 
- <br>
-</p>
+而且单页SPA还有一个很大的弊端就是对SEO很不友好。那么如何解决这些问题呢?
 
+<font color=red>SSR(Nuxt)--</font>当然是很好的解决方案，但这也意味着一定的学习成本和运维成本，而如果你已经有了一个现成的<font color=red>Vue单页应用</font>，转向<font color=red>SSR</font>也并不是一个无缝的过程，需要投入更大的学习成本去开发。
 
+那么<font color=red>预渲染</font>就显得更加合适了。只需要安装一个<font color=red>Webpack</font>的插件+一些简单的<font color=red>Webpack</font>配置就可以解决上述的两个问题。
 
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d5877d1923662?w=370&h=661&f=gif&s=2564480)
+## 项目实战预览
 
-在线地址:[https://fancy.czero.cn](https://fancy.czero.cn)
-
-vue-router开启history模式: 
-
-router mode 设置history模式
-
-nginx配置：
-
-	location/ {
-		try_files $uri $uri/ /index.html
-	}
-
-[http://router.czero.cn](http://router.czero.cn)
+<font color=orange>用手机预览效果更佳(PC端请用手机调试模式)</font>
 
 
-手机扫描二维码查看:
+### 没有预渲染:
 
+预览地址:[http:fancy.czero.cn](http:fancy.czero.cn)
 
+Github:[https://github.com/czero1995/fancy-store](https://github.com/czero1995/fancy-store)
 
-![](https://user-gold-cdn.xitu.io/2018/7/25/164d1c98a029c222?w=280&h=280&f=png&s=1411)
- 
-[点击下载安卓apk安装包](http://github.czero.cn/fancyapp.apk)
+打包完成的项目结构:
 
-源码地址:[https://github.com/czero1995/fancy-store](https://github.com/czero1995/fancy-store)
+![](https://user-gold-cdn.xitu.io/2018/11/17/1672097e1f04732d?w=193&h=150&f=png&s=10733)
+### 有预渲染:
 
+预览地址:[http:router.czero.cn](http:router.czero.cn)
 
-### 项目主架构
+Github:[https://github.com/czero1995/fancy-store/tree/prerender](https://github.com/czero1995/fancy-store/tree/prerender)
 
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d562efa48d77c?w=515&h=751&f=png&s=93340)
+打包完成的项目结构:
 
-### 使用的库
+![](https://user-gold-cdn.xitu.io/2018/11/17/16720960cccc7174?w=203&h=416&f=png&s=26557)
+查看源码:<font color=red>经过prerender预渲染过后的代码</font>:
+![](https://user-gold-cdn.xitu.io/2018/11/17/167207774db2257b?w=1887&h=896&f=png&s=1061879)
 
-* vue-cli (vue+webpack脚手架)
-* vue-router(路由跳转)
-* vuex(状态管理)
-* axios(数据请求)
-* mock.js(模拟后台数据)
-* vue-touch(手势判断)
-* fastclick(解决移动端浏览器 300 毫秒点击延迟问题)
-* vue-lazyload(图片懒加载)
-* swiper(轮播)
+## 将Vue-cli单页SPA转为预渲染
+1.需要将<font color=red>router</font>设为<font color=red>history</font>模式。
 
-## 设计布局: 
+2.修改服务器<font color=red>nginx</font>的配置(刷新页面的时候会做重定向跳转)
 
-* HTML5 
-* CSS3 
-* Less
-* rem(阿里用的那套rem算法)
-* Flex(弹性布局)
-* vue-touch(用于实现购物车左滑删除功能)
-* 动画（vue原生transition实现原生app的效果）
-* 雪碧图（雪碧图在线合成工具: ![](https://www.toptal.com/developers/css/sprite-generator)）
-	
-## 数据请求：
-
-* Mock(模拟后台数据)
-* Axios(请求数据,添加全局请求拦截器)
-
-## 逻辑交互：
-
-* vue(数据渲染,各个组件间的数值传递)
-* vue-router(组件间的路由跳转)
-* vuex(全局状态的管理)
-
-
-## 调试
-* vConsole(在移动端查看调试器)
-
-## 优化方案: 
-
-* 腾讯智图(压缩图片，减少图片的体积) 
-* 雪碧图（雪碧图在线合成工具: ![](https://www.toptal.com/developers/css/sprite-generator)） 
-* vue-lazyload(图片懒加载，缓解加载数据,提高网页性能)
-* fastclick(解决移动端300ms延迟，提高页面交互流畅度)
-* vue-rouer(路由懒加载,分离app的js为多个js文件，到对应的页面再执行对应的js)
-* webpack(config/index.js文件内的productionSourceMap改为false,这样打包出来的文件可以没有.map结尾的js文件，且文件体积减少至少一半)
-
-## Vuex刷新保存状态
-
-使用Vuex做状态管理的时候，当用户刷新页面，Vuex里面的状态会全部丢失，从而引起程序的一场。解决思路是在creared()钩子函数里面添加以下方法:
-	
-	created(){
-	   console.log('页面执行刷新时，保存Vuex的状态到LocalStorage')
-	    //在页面加载时读取localStorage里的状态信息
-	    localStorage.getItem("userMsg") && this.$store.replaceState(Object.assign(this.$store.state,JSON.parse(localStorage.getItem("userMsg"))));
-	    
-	    //在页面刷新时将vuex里的信息保存到localStorage里
-	    window.addEventListener("beforeunload",()=>{
-	        localStorage.setItem("userMsg",JSON.stringify(this.$store.state))
-	    })
-	  }  
-上面代码的原理是，当页面刷新时，会将当前Vuex的状态存储到LocalStorage里面，刷新成功，再从LocalStorage赋值到Vuex里面.      
-## 实现细节
-
-### 媲美原生的页面前进和后退的动画实现:
-
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d563c011aa615?w=363&h=667&f=gif&s=2186583)
-
-* 指定transition:name
-
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d5651095fe0fb?w=954&h=272&f=png&s=23216)
-
-* 在data中声明默认的进出动画
- 
-
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d5654c843026e?w=494&h=241&f=png&s=10764)
-
-* 在mounted()数据渲染初始化完成之后进行判断
- 
-
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d5659218ecb69?w=1091&h=499&f=png&s=39885)
-
-* 拿到vuex的状态值
- 
-
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d56747251259a?w=818&h=146&f=png&s=7276)
-
-
-* 然后进行判断
-
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d565df58b615b?w=818&h=146&f=png&s=7276) 
-
-* 最后将当前的组件名字传给vuex,实现不同的组件进去就有不同的切换动画。
-
-
-#### 下一页动画
-
-    .slide-go-enter-active,
-    .slide-go-leave-active {
-        transition: all .5s;
-        opacity: .8;
-    }
-
-    .slide-go-enter,
-    .slide-go-leave-to {
-        transition: all .5s;
-        transform: translate3d(100%, 0, 0);
-        opacity: .8;
-    }
+    try_files $uri /index.html;
     
-### 返回上一页动画
-    .slide-back-enter-active,
-    .slide-back-leave-active {
-        transition: all .5s;
-    }
+<font color=orange>提个醒:</font>如下图，这里有个大坑，当需要用懒加载来做预渲染，nginx上配置
+<font color=red> try_files $uri $uri/ /index.html;</font>
+
+没在首页刷新页面的时候，会报错。
+
+![](https://user-gold-cdn.xitu.io/2018/11/17/167207c2c179a9f5?w=349&h=166&f=png&s=12520)
+
+
+3.安装<font color=red>prerender-spa-plugin</font>
+
+    cnpm install prerender-spa-plugin --save
     
-    .slide-back-enter,
-    .slide-back-leave-to {
-        transition: all .5s;
-        transform: translate3d(-100%, 0, 0);
-    }
+4.修改<font color=red>build/webpack.prod.conf.js</font>下的配置为:
+
+![](https://user-gold-cdn.xitu.io/2018/11/17/167208422eb26566?w=1114&h=433&f=png&s=83783)
 
 
-## 购物车左滑删除
+5.将<font color=red>config/index.js</font>里的<font color=red>build</font>中的<font color=red>assetsPublicPath</font>字段设置为<font color=red>'/'</font>
 
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d56a518a48853?w=363&h=667&f=gif&s=610309)
+6.调整<font color=red>main.js</font>
 
-### v-touch
-在css中设置好删除按钮的偏移量
-
-    -webkit-transform: translate(-12%, 0);
-	-webkit-transition: all 0.3s linear;
-	
-## 左右滑方法
-
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d569747db9f86?w=352&h=206&f=png&s=9226)
-
-滑动的时候触发select样式，进行绑定
-
-让当前的列表项==购物车的列表，样式会被激活，出现左滑删除
-
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d56a1ab7109f1?w=694&h=29&f=png&s=3335)
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d5668cda86f5e?w=1082&h=64&f=png&s=10268)
-
-    注意页面的盒子使用盒子之后会和原生页面出现冲突，导致滑动不流畅
-    因此，需要在main.js指定默认的滑动方式为横向滑动触发
-
-
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d576c6d2c1bf8?w=713&h=86&f=png&s=6668)
-## 订单页面，点击顶部导航和左右滑动进行组件的切换以及动画样式的判断
-
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d56aac5ce5fca?w=363&h=667&f=gif&s=543096)
-
-也是使用的v-touch组件，实现方式和组件切换类似。
-我给每个订单状态的组件一个不同的数字，根据这个数字，判断组件是左滑动的动画还是又滑动的动画
-
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d56b4c0d25103?w=657&h=160&f=png&s=11547)
-![](https://user-gold-cdn.xitu.io/2018/1/8/160d56b3e31093b2?w=389&h=145&f=png&s=9858)
-
-### Vue-CLI Webpack构建优化
-#### 只黏贴关键部分的代码
-* 使用Happypack多线程打包构建
-
-在**build/webpack.base.cong.js**下添加如下代码
-
-		const HappyPack = require('happypack')
-		const os = require('os')
-		const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
-
-		 plugins: [
-		    new HappyPack({
-		      id: 'happy-babel-js',
-		      loaders: ['babel-loader?cacheDirectory=true'],
-		      threadPool: happyThreadPool,
-		    })
-		  ],
-		  
-		{
-	        test: /\.js$/,
-	        // loader: 'babel-loader',
-	        loader: 'happypack/loader?id=happy-babel-js', // 增加新的HappyPack构建loader
-	        exclude: /node_modules/,
-	        include: [resolve('src')]
-	      },
-
-* babrl-loader开启缓存
-
-* 启用DllPlugin和DllReferencePlugin预编译库文件
-
-
-第三方库文件单独打包一次，以后的编译都不需要在编译打包第三方库
-
-在**build/**文件夹下新建**webpack.dll.config.js**文件,复制一下代码:
-
-		const path = require("path")
-		const webpack = require("webpack")
-		
-		module.exports = {
-		    // 你想要打包的模块的数组
-		    entry: {
-		        vendor: ['vue/dist/vue.esm.js', 'axios', 'vue-router', 'vuex']
-		    },
-		    output: {
-		        path: path.join(__dirname, '../static/js'), // 打包后文件输出的位置
-		        filename: '[name].dll.js',
-		        library: '[name]_library'
-		    },
-		    plugins: [
-		        new webpack.DllPlugin({
-		            path: path.join(__dirname, '.', '[name]-manifest.json'),
-		            name: '[name]_library',
-		            context: __dirname
-		        }),
-		        // 压缩打包的文件
-		        new webpack.optimize.UglifyJsPlugin({
-		            compress: {
-		                warnings: false
-		            }
-		        })
-		    ]
-		}
-在**build/webpack.dev.config.js**和**build/webpack.prod.config.js**中添加plugins
-
-		new webpack.DllReferencePlugin({
-		      context: __dirname,
-		      manifest: require('./vendor-manifest.json')
-		}),
-		
-在**根目录下的index.html**下引入预编译的库
-
-	 	<script src="./static/js/vendor.dll.js"></script>
-
-在**package.json/scripts**下中添加dll命令
-
-    "dll": "webpack --config ./build/webpack.dll.config.js"
+    new Vue({
+      i18n,
+      router,
+      store,
+      render: h => h(App)
+    }).$mount('#app', true)
     
-运行:
-
-	npm run dll
-	
-然后再
-
-	npm run dev或npm run build
-	
-
-## Vue-cli开启PWA(Service Worker)和引入骨架屏
-
-![](https://user-gold-cdn.xitu.io/2018/7/25/164d1bf4111ff701?w=2712&h=1150&f=png&s=769314)
-
-![](https://user-gold-cdn.xitu.io/2018/7/25/164d1bf8aecc348e?w=2840&h=1076&f=png&s=527706)
-
-参考文章:
-
-[https://github.com/czero1995/vue-pwa-skeleton](https://github.com/czero1995/vue-pwa-skeleton)
-
-[https://zhuanlan.zhihu.com/p/37408373](https://zhuanlan.zhihu.com/p/37408373)
-
-## 持续集成服务 Travis CI
-
-利用Travis CI，监听Github项目master，一旦检测到master有代码变动，自动执行脚本，并把编译打包完成的项目自动发送部署到服务器，不用再像以前一样，需要ssh登录到服务器，再执行git pull操作。
-本地添加.travis.yml
-
-    language: node_js
-    node_js:
-    - 8
-    branchs:
-      only:
-      - master
-    before_install:
-    - openssl aes-256-cbc -K $encrypted_87bf11d507f0_key -iv $encrypted_87bf11d507f0_iv
-      -in id_rsa.enc -out ~/.ssh/id_rsa -d
-    - chmod 600 ~/.ssh/id_rsa
-    - echo -e "Host 47.98.240.154\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-    script:
-    - npm install cnpm --registry=https://registry.npm.taobao.org
-    - cnpm install
-    - npm run build
-    - scp -r dist root@47.98.240.154:/var/www/html/fancy
-    - 
+7.执行<font color=red>npm run build</font>你会发现，最后打包出来的目录和之前不太一样，都是一些渲染完成好的页面
 
 
+![](https://user-gold-cdn.xitu.io/2018/11/17/167208775be9a036?w=203&h=416&f=png&s=26557)
 
-遇到了很多的坑，失败了无数次，终于知道问题所在:
-
-![](https://user-gold-cdn.xitu.io/2018/7/25/164d1b1333bfc7ce?w=1577&h=980&f=png&s=191206)
+![](https://user-gold-cdn.xitu.io/2018/11/17/16720883883f40d5?w=965&h=921&f=png&s=399356)
 
 
-## 生产环境错误监控
-[sentry](https://sentry.io/welcome/)是国外开源的错误监控库，有线上环境，也可以部署到自己的服务器，可以跟踪错误出现的步骤和错误的详细信息，方便开发人员进行快速定位。
-![](https://user-gold-cdn.xitu.io/2018/7/25/164d1b8eb9c5276d?w=1204&h=426&f=png&s=96403)
+## 加持vue-meta-info提高SEO
 
-## 免费升级到HTTPS
-`升级到https后，服务器可以开启http2.0版本，对比http1.x性能和缓存各方面要更好，还有其他新特性，
-可以启动service work功能，更好的进行离线缓存，更好的离线体验。
-HTTPS证书可以免费申请，阿里云跟腾讯云都可以申请，按照文档指示进行申请下载，然后将下载的证书上传到服务器，配置服务器的内容，就可以开启https、http2.0、service work等功能了。
-`
-![](https://user-gold-cdn.xitu.io/2018/7/25/164d1bccfba8c953?w=666&h=90&f=png&s=16399)
+    npm install vue-meta-info --save
 
-# 使用说明
+### 全局引入 vue-meta-info
 
-	#克隆项目
-	git clone https://github.com/czero1995/fancy-store.git
-	
-	# 安装依赖
-	npm install
-	
-	# DLL构建库(提高打包和编译的速度)
-	npm run dll
+    import Vue from 'vue'
+    import MetaInfo from 'vue-meta-info'
+    
+    Vue.use(MetaInfo)
 
-	# 本地开发环境 访问http://localhost:8080
-	npm run dev
-	
-	# 构建生产
-	npm run build
+### 组件内静态使用 metaInfo
 
+      export default {
+        metaInfo: {
+          title: 'My Example App', // set a title
+          meta: [{                 // set meta
+            name: 'keyWords',
+            content: 'My Example App'
+          }]
+          link: [{                 // set link
+            rel: 'asstes',
+            href: 'https://assets-cdn.github.com/'
+          }]
+        }
+      }
+
+## Github
+无预渲染:[https://github.com/czero1995/fancy-store](https://github.com/czero1995/fancy-store)
+
+有预渲染:[https://github.com/czero1995/fancy-store/tree/prerender](https://github.com/czero1995/fancy-store/tree/prerender)
