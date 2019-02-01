@@ -17,9 +17,8 @@
 
 <script>
 	import Headersec from '../base/HeaderSec.vue';
-	import Nopage from '../base/NoPage.vue';
 	import Ordertab from '../base/OrderTab.vue';
-	import { mapGetters, mapMutations } from 'vuex'
+	import { mapMutations } from 'vuex'
 	export default {
 		data() {
 			return {

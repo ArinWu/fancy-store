@@ -10,7 +10,7 @@
 						<nopage></nopage>
 					</div>
 					<div class="order-item" v-show="havePage" v-cloak>
-						<div v-for="itemPay in $store.state.pays">
+						<div v-for="(itemPay, itemIndex) in $store.state.pays" :key="itemIndex">
 							<div class="order-top flex-between">
 								<p>订单号xxxxx</p>
 								<p>已支付</p>

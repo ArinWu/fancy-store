@@ -159,13 +159,13 @@
 
 	.arrow_next{
 		width: 0.4rem;
-    height: 0.4rem;
+    	height: 0.4rem;
   		background: url('../../../public/img/icon/common_sprites.png') -10px -710px;
 
 	}
 	.address_img{
 		width: 0.6rem;
-    height: 0.48rem;
+    	height: 0.48rem;
   		background: url('../../../public/img/icon/common_sprites.png') -10px -506px;
 
 	}
