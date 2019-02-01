@@ -17,7 +17,7 @@
             <div class="productTop flex-between" @click="onCategory(productIndex)">
               <p class="productTop-text">{{ productItem.Category.TopText }}</p>
               <div class="flex-align-center">
-     <p class="productTop-text">{{ productIndex + 1 }}F</p>
+                <p class="productTop-text">{{ productIndex + 1 }}F</p>
                 <i class="arrowImg"></i>
               </div>
             </div>
