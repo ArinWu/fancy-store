@@ -1,45 +1,45 @@
 {
-  "name": "fancy-store",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "precommit": "lint-staged"
-  },
-  "dependencies": {
-    "axios": "^0.18.0",
-    "fastclick": "^1.0.6",
-    "husky": "^1.3.1",
-    "less": "^3.9.0",
-    "less-loader": "^4.1.0",
-    "lint-staged": "^8.1.1",
-    "mockjs": "^1.0.1-beta3",
-    "raven-js": "^3.27.0",
-    "swiper": "^4.4.6",
-    "vconsole": "^3.2.2",
-    "vue": "^2.5.21",
-    "vue-i18n": "^8.7.0",
-    "vue-lazyload": "^1.2.6",
-    "vue-router": "^3.0.1",
-    "vue-touch": "^2.0.0-beta.4",
-    "vuex": "^3.0.1"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.3.0",
-    "@vue/cli-plugin-eslint": "^3.3.0",
-    "@vue/cli-service": "^3.3.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "husky": "^1.3.1",
-    "vue-template-compiler": "^2.5.21"
-  },
-  "lint-staged": {
-    "*.{js,json,css,vue}": [
-      "prettier --tab-width 2 --print-width 200 --write",
-      "git add"
-    ]
-  }
+    "name": "fancy-store",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint",
+        "precommit": "lint-staged"
+    },
+    "dependencies": {
+        "axios": "^0.18.0",
+        "fastclick": "^1.0.6",
+        "husky": "^1.3.1",
+        "less": "^3.9.0",
+        "less-loader": "^4.1.0",
+        "lint-staged": "^8.1.1",
+        "mockjs": "^1.0.1-beta3",
+        "raven-js": "^3.27.0",
+        "swiper": "^4.4.6",
+        "vconsole": "^3.2.2",
+        "vue": "^2.5.21",
+        "vue-i18n": "^8.7.0",
+        "vue-lazyload": "^1.2.6",
+        "vue-router": "^3.0.1",
+        "vue-touch": "^2.0.0-beta.4",
+        "vuex": "^3.0.1"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "^3.3.0",
+        "@vue/cli-plugin-eslint": "^3.3.0",
+        "@vue/cli-service": "^3.3.0",
+        "babel-eslint": "^10.0.1",
+        "eslint": "^5.8.0",
+        "eslint-plugin-vue": "^5.0.0",
+        "husky": "^1.3.1",
+        "vue-template-compiler": "^2.5.21"
+    },
+    "lint-staged": {
+        "*.{js,json,css,vue}": [
+            "prettier --tab-width 4 --print-width 200 --write",
+            "git add"
+        ]
+    }
 }
