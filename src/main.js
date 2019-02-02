@@ -10,7 +10,8 @@ import Vconsole from "vconsole";
 import fastclick from "fastclick";
 import Raven from "raven-js";
 import RavenVue from "raven-js/plugins/vue";
-
+import { mapGetters, mapMutations } from "vuex";
+// import "../public/js/rem.js";
 // 控制台插件
 let vConsole = null;
 process.env.NODE_ENV == "development" && (vConsole = new Vconsole());
@@ -27,34 +28,57 @@ fastclick.attach(document.body);
 
 // Sentry错误日志监控
 Raven.config("https://ce431a99e0884612a053541eef0f2810@sentry.io/1245961", {
-  release: process.env.RELEASE_VERSION,
-  debug: true
+    release: process.env.RELEASE_VERSION,
+    debug: true
 })
-  .addPlugin(RavenVue, Vue)
-  .install();
+    .addPlugin(RavenVue, Vue)
+    .install();
 
 // 图片懒加载
 Vue.use(VueLazyLoad, {
-  //懒加载声明错误图和占位图
-  preLoad: 1.3,
-  error: "./img/github.png",
-  loading: "./img/github.png"
+    //懒加载声明错误图和占位图
+    preLoad: 1.3,
+    error: "./img/github.png",
+    loading: "./img/github.png"
 });
 
 // 手势滑动事件
 Vue.use(VueTouch, {
-  name: "v-touch"
+    name: "v-touch"
 });
 VueTouch.config.swipe = {
-  direction: "horizontal",
-  threshold: 200
+    direction: "horizontal",
+    threshold: 200
 };
 
 Vue.config.productionTip = false;
 
+Vue.mixin({
+    data() {
+        return {
+            cartLength: 0,
+            slidename: "slide-go",
+            mainarea: false
+        };
+    },
+    mounted() {
+        this.mainarea = true;
+    },
+    computed: {
+        ...mapGetters(["this.$store.state.comname"])
+    },
+    methods: {
+        ...mapMutations({
+            setGoods: "SET_GOODS",
+            setCarts: "SET_CARTS",
+            setTabindex: "SET_TABINDEX",
+            setComname: "SET_COMNAME"
+        })
+    }
+});
 new Vue({
-  router,
-  store,
-  i18n,
-  render: h => h(App)
+    router,
+    store,
+    i18n,
+    render: h => h(App)
 }).$mount("#app");
